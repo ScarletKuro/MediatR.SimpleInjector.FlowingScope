@@ -2,50 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MediatR.SimpleInjector.FlowingScope.Internal
+namespace MediatR.SimpleInjector.FlowingScope.Internal;
+
+internal static class HandlersOrderer
 {
-    internal static class HandlersOrderer
+    public static IList<object> Prioritize<TRequest>(IList<object> handlers, TRequest request)
+        where TRequest : notnull
     {
-        public static IList<object> Prioritize<TRequest>(IList<object> handlers, TRequest request)
-            where TRequest : notnull
+        if (handlers.Count < 2)
         {
-            if (handlers.Count < 2)
-            {
-                return handlers;
-            }
-
-            var requestObjectDetails = new ObjectDetails(request);
-            var handlerObjectsDetails = handlers.Select(s => new ObjectDetails(s)).ToList();
-
-            var uniqueHandlers = RemoveOverridden(handlerObjectsDetails).ToArray();
-            Array.Sort(uniqueHandlers, requestObjectDetails);
-
-            return uniqueHandlers.Select(s => s.Value).ToList();
+            return handlers;
         }
 
-        private static IEnumerable<ObjectDetails> RemoveOverridden(IList<ObjectDetails> handlersData)
-        {
-            for (var i = 0; i < handlersData.Count - 1; i++)
-            {
-                for (var j = i + 1; j < handlersData.Count; j++)
-                {
-                    if (handlersData[i].IsOverridden || handlersData[j].IsOverridden)
-                    {
-                        continue;
-                    }
+        var requestObjectDetails = new ObjectDetails(request);
+        var handlerObjectsDetails = handlers.Select(s => new ObjectDetails(s)).ToList();
 
-                    if (handlersData[i].Type.IsAssignableFrom(handlersData[j].Type))
-                    {
-                        handlersData[i].IsOverridden = true;
-                    }
-                    else if (handlersData[j].Type.IsAssignableFrom(handlersData[i].Type))
-                    {
-                        handlersData[j].IsOverridden = true;
-                    }
+        var uniqueHandlers = RemoveOverridden(handlerObjectsDetails).ToArray();
+        Array.Sort(uniqueHandlers, requestObjectDetails);
+
+        return uniqueHandlers.Select(s => s.Value).ToList();
+    }
+
+    private static IEnumerable<ObjectDetails> RemoveOverridden(IList<ObjectDetails> handlersData)
+    {
+        for (var i = 0; i < handlersData.Count - 1; i++)
+        {
+            for (var j = i + 1; j < handlersData.Count; j++)
+            {
+                if (handlersData[i].IsOverridden || handlersData[j].IsOverridden)
+                {
+                    continue;
+                }
+
+                if (handlersData[i].Type.IsAssignableFrom(handlersData[j].Type))
+                {
+                    handlersData[i].IsOverridden = true;
+                }
+                else if (handlersData[j].Type.IsAssignableFrom(handlersData[i].Type))
+                {
+                    handlersData[j].IsOverridden = true;
                 }
             }
-
-            return handlersData.Where(w => !w.IsOverridden);
         }
+
+        return handlersData.Where(w => !w.IsOverridden);
     }
 }
