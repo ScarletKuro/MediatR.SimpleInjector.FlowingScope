@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MediatR;
+﻿using MediatR;
 using MediatR.Pipeline;
 using MediatR.SimpleInjector.FlowingScope;
 using SimpleInjector;
@@ -20,10 +19,11 @@ namespace MediatRSimpleInjectorLab
             container.Register<IPublisher, MediatRScoped>(Lifestyle.Scoped);
 
             container.Register(typeof(IRequestHandler<,>), assemblies);
-            RegisterHandlers(container, typeof(INotificationHandler<>), assemblies);
-            RegisterHandlers(container, typeof(IRequestExceptionAction<,>), assemblies);
-            RegisterHandlers(container, typeof(IRequestExceptionHandler<,,>), assemblies);
-            RegisterHandlers(container, typeof(IStreamRequestHandler<,>), assemblies);
+            
+            container.RegisterHandlers(typeof(INotificationHandler<>), assemblies);
+            container.RegisterHandlers(typeof(IRequestExceptionAction<,>), assemblies);
+            container.RegisterHandlers(typeof(IRequestExceptionHandler<,,>), assemblies);
+            container.RegisterHandlers(typeof(IStreamRequestHandler<,>), assemblies);
 
             //Pipeline
             container.Collection.Register(typeof(IPipelineBehavior<,>), new[]
@@ -56,18 +56,6 @@ namespace MediatRSimpleInjectorLab
             Console.WriteLine("End SimpleInjector!");
             Console.WriteLine("-----------------------");
             Console.ReadLine();
-        }
-
-        private static void RegisterHandlers(Container container, Type collectionType, Assembly[] assemblies)
-        {
-            // we have to do this because by default, generic type definitions (such as the Constrained Notification Handler) won't be registered
-            var handlerTypes = container.GetTypesToRegister(collectionType, assemblies, new TypesToRegisterOptions
-            {
-                IncludeGenericTypeDefinitions = true,
-                IncludeComposites = false,
-            });
-
-            container.Collection.Register(collectionType, handlerTypes);
         }
     }
 }
