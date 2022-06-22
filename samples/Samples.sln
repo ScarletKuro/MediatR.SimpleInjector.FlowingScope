@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediatRSimpleInjectorLab", "MediatRSimpleInjectorLab\MediatRSimpleInjectorLab.csproj", "{F072F2EC-0153-4B4F-9E5C-F1742D2A6ADA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediatR.SimpleInjector.FlowingScope", "..\src\MediatR.SimpleInjector.FlowingScope\MediatR.SimpleInjector.FlowingScope.csproj", "{148C7FBB-7F12-4B54-8027-9CCE62E6AB7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F072F2EC-0153-4B4F-9E5C-F1742D2A6ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F072F2EC-0153-4B4F-9E5C-F1742D2A6ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F072F2EC-0153-4B4F-9E5C-F1742D2A6ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F072F2EC-0153-4B4F-9E5C-F1742D2A6ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148C7FBB-7F12-4B54-8027-9CCE62E6AB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148C7FBB-7F12-4B54-8027-9CCE62E6AB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148C7FBB-7F12-4B54-8027-9CCE62E6AB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148C7FBB-7F12-4B54-8027-9CCE62E6AB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC1E737E-679E-4922-A049-B55D30C5585C}
+	EndGlobalSection
+EndGlobal
